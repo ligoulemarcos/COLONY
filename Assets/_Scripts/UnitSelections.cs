@@ -21,37 +21,21 @@ public class UnitSelections : MonoBehaviour
     {
         DeselectAll();
         unitsSelected.Add(unitToAdd);
-        unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
     }
 
     public void ShiftClickSelect(GameObject unitToAdd)
     {
         if(unitsSelected.Contains(unitToAdd))
-        {
-            unitToAdd.transform.GetChild(0).gameObject.SetActive(false);
             unitsSelected.Remove(unitToAdd);
-        }
         else
-        {
-            unitsSelected.Add(unitToAdd);   
-            unitToAdd.transform.GetChild(0).gameObject.SetActive(true);         
-        }
+            unitsSelected.Add(unitToAdd);
     }
 
     public void DragSelect(GameObject unitToAdd)
     {
         if(!unitsSelected.Contains(unitToAdd))
-        {
             unitsSelected.Add(unitToAdd);
-            unitToAdd.transform.GetChild(0).gameObject.SetActive(true);
-        }
     }
 
-    public void DeselectAll()
-    {
-        foreach(var unit in unitsSelected)
-            unit.transform.GetChild(0).gameObject.SetActive(false);
-
-        unitsSelected.Clear();
-    }
+    public void DeselectAll() => unitsSelected.Clear();
 }
