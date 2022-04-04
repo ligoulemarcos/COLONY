@@ -37,7 +37,7 @@ public class Unit : MonoBehaviour
         isSelected = UnitSelections.Instance.unitsSelected.Contains(this.gameObject);
         selectedChild.SetActive(isSelected);
 
-        if(isSelected && Vector3.Distance(transform.position, destination) > .1f)
+        if(Vector3.Distance(transform.position, destination) > .1f)
         {
             transform.position = Vector3.MoveTowards(
                                     transform.position, 
@@ -45,8 +45,6 @@ public class Unit : MonoBehaviour
                                     moveSpeed * Time.deltaTime
                                 );
         }
-        else if(!isSelected && Vector3.Distance(transform.position, destination) > .1f)
-            destination = transform.position;
     }
 
     void OnDestroy()
@@ -56,10 +54,13 @@ public class Unit : MonoBehaviour
 
     private void MoveUnit(InputAction.CallbackContext context)
     {
-        Vector2 mousePos = Mouse.current.position.ReadValue();
-        mousePos = mainCam.ScreenToWorldPoint(mousePos);
-        Vector3Int gridPos = map.WorldToCell(mousePos);
-        if(map.HasTile(gridPos))
-            destination = mousePos;
+        if(isSelected)
+        {
+            Vector2 mousePos = Mouse.current.position.ReadValue();
+            mousePos = mainCam.ScreenToWorldPoint(mousePos);
+            Vector3Int gridPos = map.WorldToCell(mousePos);
+            if(map.HasTile(gridPos))
+                destination = mousePos;
+        }
     }
 }
